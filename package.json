@@ -7,12 +7,9 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@langchain/core": "^0.3.71",
-    "@langchain/google-genai": "^0.2.16",
-    "@langchain/openai": "^0.6.7",
+    "diaflow": "^2.0.0",
     "dotenv": "^17.2.1",
-    "snapcube": "^1.4.2",
-    "zod": "^4.1.1"
+    "snapcube": "^1.4.2"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
