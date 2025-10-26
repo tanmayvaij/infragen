@@ -59,21 +59,6 @@ GITHUB_ACCOUNT_TOKEN=your_github_personal_access_token
 
 ---
 
-## ▶️ Usage
-
-```ts
-import { generateDeploymentPlan } from "./index";
-
-(async () => {
-  try {
-    const plan = await generateDeploymentPlan("tanmayvaij/snapcube-docs");
-    console.log(JSON.stringify(plan, null, 2));
-  } catch (err) {
-    console.error("Error generating deployment plan:", err);
-  }
-})();
-```
-
 ### Example Output
 
 ```json
@@ -89,29 +74,6 @@ import { generateDeploymentPlan } from "./index";
   ]
 }
 ```
-
----
-
-## 🧩 Function Breakdown
-
-### `generateDeploymentPlan(repository: string)`
-
-* **Input**: GitHub repository in `owner/name` format
-* **Output**: JSON object conforming to schema:
-
-```ts
-{
-  id: string,         // unique identifier
-  terraform: string,  // AWS infra config (Terraform, ap-south-1)
-  cmds: string[]      // shell commands for full deployment
-}
-```
-
-Internally:
-
-1. Fetches repo structure via `getGithubFiles`
-2. Pipes into Gemini with a strong schema (`zod`)
-3. Returns validated JSON
 
 ---
 
