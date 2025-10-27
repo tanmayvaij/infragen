@@ -57,5 +57,4 @@ export const generateDeploymentPlan = async (repository: string) => {
   const response = await agent.run(prompt(projectStructure.toString()));
 
   console.log(response);
-  
 };
