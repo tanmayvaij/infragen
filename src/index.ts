@@ -5,27 +5,6 @@ import DiaFlowAgent, { FileMemory } from "diaflow";
 
 config();
 
-const prompt = (structure: string) => `
-YOU ARE A EXPERT TECH STACK ANALYZER AND DEVOPS ENGINEER
-
-Generate a JSON object for project deployment.
-
-The project has the following file structure: 
-${structure}
-
-The JSON object should have three properties:
-
- - id: A unique project identifier.
-
- - terraform: A single string containing a complete and production-ready Terraform configuration. 
-   This configuration must provision the necessary AWS infrastructure to deploy the given project, 
-   with all resources located in the Mumbai (ap-south-1) region.
-
- - cmds: An array of shell commands, in order, to fully build and deploy the project. 
-   This should include all necessary steps such as dependency installation, a project-specific build process, 
-   infrastructure provisioning, and file/asset synchronization with the provisioned cloud resources. 
-`;
-
 const DeploymentSchema = z.object({
   id: z.string().describe("A unique project identifier"),
   terraform: z.string(
@@ -54,7 +33,26 @@ export const generateDeploymentPlan = async (repository: string) => {
     token: process.env.GITHUB_ACCOUNT_TOKEN!,
   })) as string[];
 
-  const response = await agent.run(prompt(projectStructure.toString()));
+  const response = await agent.run(`
+    YOU ARE A EXPERT TECH STACK ANALYZER AND DEVOPS ENGINEER
+
+    Generate a JSON object for project deployment.
+
+    The project has the following file structure: 
+    ${projectStructure.toString()}
+
+    The JSON object should have three properties:
+
+    - id: A unique project identifier.
+
+    - terraform: A single string containing a complete and production-ready Terraform configuration. 
+      This configuration must provision the necessary AWS infrastructure to deploy the given project, 
+      with all resources located in the Mumbai (ap-south-1) region.
+
+    - cmds: An array of shell commands, in order, to fully build and deploy the project. 
+      This should include all necessary steps such as dependency installation, a project-specific build process, 
+      infrastructure provisioning, and file/asset synchronization with the provisioned cloud resources. 
+`);
 
   console.log(response);
 };
